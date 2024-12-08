@@ -249,9 +249,9 @@ function addCalendarSendMailAddContact(e) {
       let contactName = name + " " + dateLabel; // 예: Jae Hyun Kim 0920
       addGoogleContactWithPeopleAPI(contactName, phoneNumber);
   
-      // 예약 확인 이메일 전송
+      // 예약금 알림 이메일 전송
       let priceText = responses[22];
-      sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, priceText);
+      sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, priceText);
     }
 }
 function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_shooting, row){
@@ -313,7 +313,7 @@ function addGoogleContactWithPeopleAPI(contactName, phoneNumber) {
       }
 }
 
-function sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, priceText) {
+function sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, priceText) {
     let day = date_of_shooting.toDateString();  // 날짜를 문자열로 변환 (예: Mon Sep 25 2023)
     let hours = ('0' + date_of_shooting.getHours()).slice(-2);
     let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
@@ -352,6 +352,7 @@ function sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, pr
     let row = e.row;
     
     let name = responses[0];  // name 필드(A열)
+    let email = responses[5];  // email 필드 (F열)
     let numberOfPeople = responses[8] // Number of people 필드(I열)
     let date_of_shooting = new Date(responses[7]);  // Date of shooting 필드(H열)
     let studio = responses[23];  // which Studio? 필드 (1st or 2nd)(X열)
@@ -421,8 +422,40 @@ function sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, pr
       let newEventId = newEvent.getId();
       let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
       sheet.getRange(row, 27).setValue(newEventId); // 필요 시 열 번호 조정
-      
+
+      // 확인 이메일 전송
+      let priceText = responses[22];
+      sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, priceText);
+
     } catch (error) {
       Logger.log('확인 처리 중 에러 발생: ' + error.message);
     }
+  }
+
+  function sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, priceText) {
+    let day = date_of_shooting.toDateString();  // 날짜를 문자열로 변환 (예: Mon Sep 25 2023)
+    let hours = ('0' + date_of_shooting.getHours()).slice(-2);
+    let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
+    // 요일 가져오기
+    let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    let dayOfWeek = daysOfWeek[date_of_shooting.getDay()]; // getDay()는 요일을 숫자로 반환 (0: 일요일 ~ 6: 토요일)
+    
+    let subject = "Deposit Confirmed and Reservation Made from JP12839c Studio";  
+    
+    let message = "Dear " + name + ",\n\n" +
+                  "Hello, this is JP12839c Studio. I am writing to inform you that your reservation has been confirmed upon receipt of the deposit.\n\n" +
+                  "Reservation date and time: " + day + " (" + dayOfWeek + ") at " + hours + ":" + minutes + "\n\n" +
+                  "Looking forward to seeing you on the reservation day.\n\n" +
+                  "Thank you.\n\n" +
+                  "Best regards,\n" +
+                  "JP12839c Studio";
+  
+    // MailApp 또는 GmailApp을 사용하여 이메일 전송
+    try {
+      GmailApp.sendEmail(email, subject, message);
+      Logger.log('Email sended: ' + message);
+    } catch(error){
+      Logger.log('이메일 발송 실패: ' + error.message);
+    }
+    
   }
