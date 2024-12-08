@@ -246,8 +246,8 @@ function addCalendarSendMailAddContact(e) {
       addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_shooting, row);
     
       // 구글 연락처 추가
-        //   var contactName = name + " " + dateLabel; // 예: Jae Hyun Kim 0920
-        //   addGoogleContactWithPeopleAPI(contactName, phoneNumber);
+      var contactName = name + " " + dateLabel; // 예: Jae Hyun Kim 0920
+      addGoogleContactWithPeopleAPI(contactName, phoneNumber);
   
       // 예약 확인 이메일 전송
     //   sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople);
@@ -288,4 +288,26 @@ function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_s
         Logger.log('캘린더 이벤트 생성 에러 발생: ' + e.message);
     }
   
+}
+
+function addGoogleContactWithPeopleAPI(contactName, phoneNumber) {
+    var resource = {
+      "names": [
+        {
+          "givenName": contactName
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "value": phoneNumber,
+          "type": "mobile"
+        }
+      ]
+    };
+    try {
+        var response = People.People.createContact(resource);
+        Logger.log('Contact created: ' + response);
+      } catch (e) {
+        Logger.log('Failed to create contact: ' + e.message);
+      }
 }
