@@ -82,7 +82,7 @@ function edit(e) {
     // {values: ["A", "B", "C"]} 형태로 전달.
     addCalendarSendMailAddContact({values: rowValues, row: row});
   }
-  if (sheetName === 'info' && editedColumn == CONFIRM_COLUMN && value == "confirmed!") {
+  if (sheetName === 'info' && editedColumn == CONFIRM_COLUMN && value == "Confirmed!") {
     let rowValues = sheet.getRange(range.getRow(), 1, 1, sheet.getLastColumn()).getValues()[0];
     handleConfirmation({values: rowValues, row: row});
   }
@@ -343,4 +343,86 @@ function sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, pr
       Logger.log('이메일 발송 실패: ' + error.message);
     }
     
-  }  
+  }
+
+  function handleConfirmation(e) {
+    Logger.log('handleConfirmation 함수 실행됨');
+    
+    let responses = e.values;
+    let row = e.row;
+    
+    let name = responses[0];  // name 필드(A열)
+    let numberOfPeople = responses[8] // Number of people 필드(I열)
+    let date_of_shooting = new Date(responses[7]);  // Date of shooting 필드(H열)
+    let studio = responses[23];  // which Studio? 필드 (1st or 2nd)(X열)
+    let eventId = responses[26]; // eventId 필드 (AA열)
+    
+    // 캘린더 ID 설정
+    let studio1CalendarId = 'e4078b3f6425088e10f2fa64229001821ae20bdf8e63c42fe2c096c65cdd6aa6@group.calendar.google.com';
+    let studio2CalendarId = 'b319798d4b5cd32ef01cbe414c6b78541f258d88630e0b7d81f8d8513dc895ac@group.calendar.google.com';
+    
+    // 스튜디오에 따라 캘린더 선택
+    let calendarId;
+    if (studio == "1st") {
+      calendarId = studio1CalendarId;
+    } else if (studio == "2nd") {
+      calendarId = studio2CalendarId;
+    } else {
+      Logger.log('알 수 없는 스튜디오: ' + studio);
+      return;
+    }
+    Logger.log('캘린더 ID: ' + calendarId);
+
+    
+    if (!eventId) {
+      Logger.log('저장된 Event ID가 없습니다. 이벤트를 찾을 수 없습니다.');
+      return;
+    }
+    
+    try {
+      let calendar = CalendarApp.getCalendarById(calendarId);
+      if (!calendar) {
+        throw new Error('캘린더를 찾을 수 없습니다. ID: ' + calendarId);
+      }
+      
+      let event = calendar.getEventById(eventId);
+      if (!event) {
+        throw new Error('이벤트를 찾을 수 없습니다. Event ID: ' + eventId);
+      }
+      
+      // 기존 이벤트 삭제
+      event.deleteEvent();
+      Logger.log('기존 캘린더 이벤트 삭제 성공! Event ID: ' + eventId);
+      
+      // 업데이트된 제목으로 새 이벤트 생성
+      let hours = ('0' + date_of_shooting.getHours()).slice(-2);
+      let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
+      let newEventTitle = name + ' (' + numberOfPeople +') ' + hours + ':' + minutes;
+      
+      let startTime = new Date(
+        date_of_shooting.getFullYear(), 
+        date_of_shooting.getMonth(), 
+        date_of_shooting.getDate(),
+        date_of_shooting.getHours(),
+        date_of_shooting.getMinutes()
+      );
+      let endTime = new Date(
+        date_of_shooting.getFullYear(), 
+        date_of_shooting.getMonth(), 
+        date_of_shooting.getDate(), 
+        date_of_shooting.getHours() + 1, // 1시간 후 종료
+        date_of_shooting.getMinutes()
+      );
+      
+      let newEvent = calendar.createEvent(newEventTitle, startTime, endTime);
+      Logger.log('새 캘린더 이벤트 생성 성공! New Event ID: ' + newEvent.getId());
+      
+      // 시트에 새로운 Event ID 저장
+      let newEventId = newEvent.getId();
+      let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      sheet.getRange(row, 27).setValue(newEventId); // 필요 시 열 번호 조정
+      
+    } catch (error) {
+      Logger.log('확인 처리 중 에러 발생: ' + error.message);
+    }
+  }
