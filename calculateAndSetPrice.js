@@ -27,12 +27,12 @@ function calculateAndSetPrice(sheet, row) {
     if (individual_1st >= 1 && individual_2nd >= 1 && numberOfPeople === 2 && couple_profile >= 1) {
         const couplePrice = {1: 238000, 2: 343000, 3: 448000}[couple_profile];
         totalPrice += couplePrice;
-        priceText += `※ Shooting fee for Couple Profile: KRW ${couplePrice.toLocaleString()}\n\n`;
+        priceText += `※ Shooting fee for Couple Profile: KRW ${couplePrice.toLocaleString()} &#128522;30% discount applied\n\n`;
     }
     if (individual_1st >= 1 && individual_2nd >= 1 && individual_3rd >= 1 && numberOfPeople === 3 && couple_profile >= 1) {
         const couplePrice = {1: 238000, 2: 343000, 3: 448000}[couple_profile];
         totalPrice += couplePrice;
-        priceText += `※ Shooting fee for Couple Profile: KRW ${couplePrice.toLocaleString()}\n\n`;
+        priceText += `※ Shooting fee for Couple Profile: KRW ${couplePrice.toLocaleString()} &#128522;30% discount applied\n\n`;
     }
     else if (couple_profile) {
       const couplePrice = {1: 340000, 2: 490000, 3: 640000}[couple_profile];
@@ -49,7 +49,7 @@ function calculateAndSetPrice(sheet, row) {
     if (individual_1st >= 1 && individual_2nd >= 1 && individual_3rd >= 1 && numberOfPeople === 3 && group_profile >= 1) {
         const groupPrice = {1: 280000, 2: 413000, 3: 553000}[group_profile];
         totalPrice += groupPrice;
-        priceText += `※ Shooting fee for Group Profile: KRW ${groupPrice.toLocaleString()}\n\n`;
+        priceText += `※ Shooting fee for Group Profile: KRW ${groupPrice.toLocaleString()} &#128522;30% discount applied\n\n`;
     }
     else if (group_profile) {
       const groupPrice = {1: 400000, 2: 590000, 3: 790000}[group_profile];
