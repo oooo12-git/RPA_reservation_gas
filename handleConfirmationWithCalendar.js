@@ -93,8 +93,7 @@ function handleConfirmationWithCalendar(e) {
       sheet.getRange(row, 27).setValue(newEventId); // 필요 시 열 번호 조정
 
       // 확인 이메일 전송
-      let priceText = responses[22];
-      sendConfirmationEmail(name, email, date_of_shooting, numberOfPeople, priceText);
+      sendConfirmationEmail(name, email, date_of_shooting,studio);
 
     } catch (error) {
       Logger.log('확인 처리 중 에러 발생: ' + error.message);
