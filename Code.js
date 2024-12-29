@@ -130,7 +130,7 @@ function addCalendarSendMailAddContact(e) {
       let year = date_of_shooting.getFullYear().toString().slice(-2); // 연도의 마지막 2자리
       let month = ('0' + (date_of_shooting.getMonth() + 1)).slice(-2);
       let day = ('0' + date_of_shooting.getDate()).slice(-2);
-      let dateLabel = month + day; // MMDD 형식의 날짜
+      let dateLabel = year + month + day; // YYMMDD 형식의 날짜
       // 시간과 분을 가져와 두 자리 형식으로 설정
       let hours = ('0' + date_of_shooting.getHours()).slice(-2);
       let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
