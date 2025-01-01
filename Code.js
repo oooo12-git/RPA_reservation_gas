@@ -147,25 +147,3 @@ function addCalendarSendMailAddContact(e) {
       sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, priceText, studio);
     }
 }
-
-function addGoogleContactWithPeopleAPI(contactName, phoneNumber) {
-    let resource = {
-      "names": [
-        {
-          "givenName": contactName
-        }
-      ],
-      "phoneNumbers": [
-        {
-          "value": phoneNumber,
-          "type": "mobile"
-        }
-      ]
-    };
-    try {
-        let response = People.People.createContact(resource);
-        Logger.log('Contact created: ' + response);
-      } catch (e) {
-        Logger.log('Failed to create contact: ' + e.message);
-      }
-}
