@@ -1,14 +1,13 @@
-function sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, priceText, studio) {
+function sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, depositWon, depositDollar, priceText, studio) {
+    let depositAmount = depositWon.toLocaleString();
+    let usdAmount = depositDollar.toLocaleString();
     let day = date_of_shooting.toDateString();  // 날짜를 문자열로 변환 (예: Mon Sep 25 2023)
     let hours = ('0' + date_of_shooting.getHours()).slice(-2);
     let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
     // 요일 가져오기
     let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     let dayOfWeek = daysOfWeek[date_of_shooting.getDay()]; // getDay()는 요일을 숫자로 반환 (0: 일요일 ~ 6: 토요일)
-  
-    let depositAmount = (numberOfPeople * 100000).toLocaleString(); // 예: 1명일 경우 "100,000"
-    let usdAmount = (numberOfPeople * 79.6).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}); // 소수점 둘째 자리까지 표시
-  
+    
     // priceText의 숫자 부분만 파란색으로 변환
     let coloredPriceText = priceText.replace(/KRW\s+([\d,]+)/g, 'KRW <span style=\'color: blue\'>$1</span>');
     

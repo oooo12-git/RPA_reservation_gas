@@ -49,7 +49,7 @@ function edit(e) {
       if (!isNaN(numberOfPeople) && numberOfPeople !== "") {
         // 숫자인 경우 예치금 계산
         const depositWon = (numberOfPeople * 100000).toLocaleString();
-        const depositDollar = numberOfPeople * 79.6;
+        const depositDollar = numberOfPeople * 80;
         
         sheet.getRange(row, 21).setValue(depositWon);
         sheet.getRange(row, 22).setValue(depositDollar);
@@ -143,7 +143,9 @@ function addCalendarSendMailAddContact(e) {
       addGoogleContactWithPeopleAPI(contactName, phoneNumber);
   
       // 예약금 알림 이메일 전송
+      let depositWon = responses[20];
+      let depositDollar = responses[21];
       let priceText = responses[22];
-      sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, priceText, studio);
+      sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, depositWon, depositDollar, priceText, studio);
     }
 }

@@ -8,12 +8,12 @@ function sendConfirmationEmail(name, email, date_of_shooting, studio) {
     
     if (studio == "1st") {
       let subject = "Deposit Confirmed and Reservation Made from JP12206b Studio"; 
-      let message = "Dear <span style='color: blue'>" + name + "</span>,\n\n" +
-      "Hello, this is <span style='color: red'>JP12206b Studio</span>. I am writing to inform you that your reservation has been confirmed upon receipt of the deposit.\n\n" +
-      "Reservation date and time: <span style='color: blue'>" + day + " at " + hours + ":" + minutes + "</span>\n\n" +
-      "Looking forward to seeing you on the reservation day.\n\n" +
-      "Thank you.\n\n" +
-      "Best regards,\n" +
+      let message = "Dear <span style='color: blue'>" + name + "</span>,<br><br>" +
+      "Hello, this is <span style='color: red'>JP12206b Studio</span>. I am writing to inform you that your reservation has been confirmed upon receipt of the deposit.<br><br>" +
+      "Reservation date and time: <span style='color: blue'>" + day + " at " + hours + ":" + minutes + "</span><br><br>" +
+      "Looking forward to seeing you on the reservation day.<br><br>" +
+      "Thank you.<br><br>" +
+      "Best regards,<br>" +
       "JP12206b Studio";
 
       try {
@@ -24,12 +24,12 @@ function sendConfirmationEmail(name, email, date_of_shooting, studio) {
       }
     } else if (studio == "2nd") {
       let subject = "Deposit Confirmed and Reservation Made from JP12839c Studio";
-      let message = "Dear <span style='color: blue'>" + name + "</span>,\n\n" +
-      "Hello, this is <span style='color: red'>JP12839c Studio</span>. I am writing to inform you that your reservation has been confirmed upon receipt of the deposit.\n\n" +
-      "Reservation date and time: <span style='color: blue'>" + day + " at " + hours + ":" + minutes + "</span>\n\n" +
-      "Looking forward to seeing you on the reservation day.\n\n" +
-      "Thank you.\n\n" +
-      "Best regards,\n" +
+      let message = "Dear <span style='color: blue'>" + name + "</span>,<br><br>" +
+      "Hello, this is <span style='color: red'>JP12839c Studio</span>. I am writing to inform you that your reservation has been confirmed upon receipt of the deposit.<br><br>" +
+      "Reservation date and time: <span style='color: blue'>" + day + " at " + hours + ":" + minutes + "</span><br><br>" +
+      "Looking forward to seeing you on the reservation day.<br><br>" +
+      "Thank you.<br><br>" +
+      "Best regards,<br>" +
       "JP12839c Studio";
 
       try {
