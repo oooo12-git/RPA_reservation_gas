@@ -2,30 +2,6 @@ function sayHello() {
   Logger.log("Hello, world!");
 }
 
-function formSubmit(e) {
-    Logger.log('formSubmit 함수 실행됨');
-    // 시트 response와 시트 info 참조 가져오기
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sheetResponse = ss.getSheetByName('response');
-    const sheetInfo = ss.getSheetByName('info');
-    
-    // 폼 제출 데이터를 가져오기
-    const responses = e.values;
-    
-    // 시트 response의 마지막 행 데이터 가져오기
-    const lastRow = sheetResponse.getLastRow();
-    const newRecord = sheetResponse.getRange(lastRow, 1, 1, sheetResponse.getLastColumn()).getValues()[0];
-    
-    // response 시트의 새로운 행에서 B열부터 J열까지의 데이터 가져오기
-    const sourceData = sheetResponse.getRange(lastRow, 2, 1, 9).getValues()[0];
-    
-    // info 시트의 마지막 행 가져오기
-    const lastRowInfo = sheetInfo.getLastRow();
-    
-    // info 시트의 다음 행(A3부터 시작)에 데이터 붙여넣기
-    sheetInfo.getRange(lastRowInfo + 1, 1, 1, 9).setValues([sourceData]);
-}
-
 function edit(e) {
   // 수정된 범위 가져오기
   Logger.log('edit 함수 실행됨');

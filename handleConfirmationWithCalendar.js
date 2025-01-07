@@ -56,7 +56,7 @@ function handleConfirmationWithCalendar(e) {
       // 업데이트된 제목으로 새 이벤트 생성
       let hours = ('0' + date_of_shooting.getHours()).slice(-2);
       let minutes = ('0' + date_of_shooting.getMinutes()).slice(-2);
-      let newEventTitle = name + ' (' + numberOfPeople +') ' + hours + ':' + minutes;
+      let newEventTitle = '!test ' + name + ' (' + numberOfPeople +') ' + hours + ':' + minutes;
 
       let additionalInfo = [];
       if (couple_profile >= 1) additionalInfo.push('커플' + couple_profile);

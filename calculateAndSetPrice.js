@@ -1,6 +1,7 @@
 function calculateAndSetPrice(sheet, row) {
     // 각 열의 값들을 가져오기
     // 10번째 열부터 9개의 열을 가져오기(J열 ~ R열)
+    Logger.log("calculateAndSetPrice 함수 실행됨");
     const values = sheet.getRange(row, 10, 1, 9).getValues()[0];
     let [couple_profile, group_profile, 
           individual_1st, individual_1st_hm, 
@@ -12,8 +13,8 @@ function calculateAndSetPrice(sheet, row) {
     // 가격 계산
     let priceText = "";
     
-    // individual_more_4가 0이 아닌 경우 처리
-    if (individual_more_4 !== 0) {
+    // individual_more_4가 비어있지 않은 경우 처리
+    if (individual_more_4 !== "") {
       sheet.getRange(row, 23).setValue("기입 필요");
       return;
     }

@@ -5,7 +5,7 @@ function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_s
         if (!calendar) {
             throw new Error('캘린더를 찾을 수 없습니다. ID: ' + calendarId);
         }
-        let eventTitle = 'X ' + name + ' (' + numberOfPeople +') ' + hours + ':' + minutes;
+        let eventTitle = '!test X ' + name + ' (' + numberOfPeople +') ' + hours + ':' + minutes;
 
         let additionalInfo = [];
         if (couple_profile >= 1) additionalInfo.push('커플' + couple_profile);
