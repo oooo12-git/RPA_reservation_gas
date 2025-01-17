@@ -8,8 +8,8 @@ function editForAddContactToOthers(e) {
     let editedColumn = range.getColumn();
     let value = range.getValue();
   
-    let SEND_MAIL_COLUMN = 25; // AR열 = 26 + 18 열
-    // let CONFIRM_COLUMN = 26; // AS열 = 26 + 19 열
+    let SEND_MAIL_COLUMN = 26; // Z열
+    // let CONFIRM_COLUMN = 27; // AA열
   
     if (sheetName === 'info' && editedColumn === SEND_MAIL_COLUMN && value == "Send!") {
       let rowValues = sheet.getRange(range.getRow(), 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -29,9 +29,9 @@ function addContactToOthers(e) {
     // 폼 응답 데이터를 가져옴
     let responses = e.values;    
     let name = responses[0];  // name 필드(A열)
-    let phoneNumber = responses[4]; // Phone number 필드(E열)
-    let date_of_shooting = new Date(responses[7]);  // Date of shooting 필드(H열)
-    let email = responses[5]; // email 필드(F열)
+    let phoneNumber = responses[5]; // Phone number 필드(F열)
+    let email = responses[6]; // email 필드(G열)
+    let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
 
     let year = date_of_shooting.getFullYear().toString().slice(-2); // 연도의 마지막 2자리
     let month = ('0' + (date_of_shooting.getMonth() + 1)).slice(-2);

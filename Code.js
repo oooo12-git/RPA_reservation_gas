@@ -14,12 +14,12 @@ function edit(e) {
 
   
   // info 시트의 T열(체크박스 열)이 수정되었는지 확인
-  if (sheetName === 'info' && editedColumn === 20) { // T열은 20번째 열
+  if (sheetName === 'info' && editedColumn === 21) { // T열은 20번째 열
     
     // 체크박스가 체크되었는지 확인
     if (value === true) {
       // I열(numberOfPeople)의 값 가져오기
-      const numberOfPeople = sheet.getRange(row, 9).getValue(); // I열은 9번째 열
+      const numberOfPeople = sheet.getRange(row, 10).getValue(); // I열은 9번째 열
       
       // numberOfPeople이 숫자인지 확인
       if (!isNaN(numberOfPeople) && numberOfPeople !== "") {
@@ -27,26 +27,26 @@ function edit(e) {
         const depositWon = (numberOfPeople * 100000).toLocaleString();
         const depositDollar = numberOfPeople * 80;
         
-        sheet.getRange(row, 21).setValue(depositWon);
-        sheet.getRange(row, 22).setValue(depositDollar);
+        sheet.getRange(row, 22).setValue(depositWon);
+        sheet.getRange(row, 23).setValue(depositDollar);
       } else {
         // 숫자가 아닌 경우 "기입필요" 입력
-        sheet.getRange(row, 21).setValue("기입필요");
         sheet.getRange(row, 22).setValue("기입필요");
+        sheet.getRange(row, 23).setValue("기입필요");
       }
 
       // 가격 정보 계산 로직
       calculateAndSetPrice(sheet, row);
     } else {
       // 체크 해제시 값 지우기
-      sheet.getRange(row, 21).setValue('');
       sheet.getRange(row, 22).setValue('');
       sheet.getRange(row, 23).setValue('');
+      sheet.getRange(row, 24).setValue('');
     }
   }
 
-  let SEND_MAIL_COLUMN = 25; // AR열 = 26 + 18 열
-  let CONFIRM_COLUMN = 26; // AS열 = 26 + 19 열
+  let SEND_MAIL_COLUMN = 26; // Z열
+  let CONFIRM_COLUMN = 27; // AA열
 
   if (sheetName === 'info' && editedColumn === SEND_MAIL_COLUMN && value == "Send!") {
     let rowValues = sheet.getRange(range.getRow(), 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -72,18 +72,18 @@ function addCalendarSendMailAddContact(e) {
     let row = e.row; // 시트의 행번호
     
     let name = responses[0];  // name 필드(A열)
-    let phoneNumber = responses[4]; // Phone number 필드(E열)
-    let email = responses[5];  // email 필드 (F열)
-    let numberOfPeople = responses[8] // Number of people 필드(I열)
-    let date_of_shooting = new Date(responses[7]);  // Date of shooting 필드(H열)
-    let studio = responses[23];  // which Studio? 필드 (1st or 2nd)(X열)
-    let sendMail = responses[24];  // send mail 필드 (Send! or reject)(Y열)
+    let phoneNumber = responses[5]; // Phone number 필드(F열)
+    let email = responses[6];  // email 필드 (G열)
+    let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
+    let numberOfPeople = responses[9] // Number of people 필드(J열)
+    let studio = responses[24];  // which Studio? 필드 (1st or 2nd)(Y열)
+    let sendMail = responses[25];  // send mail 필드 (Send! or reject)(Z열)
     // let confirm = responses[25] // confirm 필드 (confirmed! or reject)
-    let couple_profile = responses[9];
-    let group_profile = responses[10];
-    let individual_1st = responses[11];
+    let couple_profile = responses[10];
+    let group_profile = responses[11];
+    let individual_1st = responses[12];
     let individual_2nd = responses[13];
-    let individual_3rd = responses[15];
+    let individual_3rd = responses[14];
     // 1호점 및 2호점 캘린더 ID 설정 (실제 캘린더 ID를 입력해야 함)
     let studio1CalendarId = 'e4078b3f6425088e10f2fa64229001821ae20bdf8e63c42fe2c096c65cdd6aa6@group.calendar.google.com';
     let studio2CalendarId = 'b319798d4b5cd32ef01cbe414c6b78541f258d88630e0b7d81f8d8513dc895ac@group.calendar.google.com';
@@ -99,7 +99,7 @@ function addCalendarSendMailAddContact(e) {
       return;
     }
 
-    Logger.log('캘린더 ID: ' + calendarId);
+    // Logger.log('캘린더 ID: ' + calendarId);
     // 선택한 캘린더에 예약 이벤트 추가
     if (sendMail == "Send!"){
       // 날짜를 YYMMDD 형식으로 변환
@@ -120,9 +120,9 @@ function addCalendarSendMailAddContact(e) {
       addGoogleContactWithPeopleAPI(contactName, phoneNumber, email);
   
       // 예약금 알림 이메일 전송
-      let depositWon = responses[20];
-      let depositDollar = responses[21];
-      let priceText = responses[22];
+      let depositWon = responses[21];
+      let depositDollar = responses[22];
+      let priceText = responses[23];
       sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, depositWon, depositDollar, priceText, studio);
     }
 }

@@ -36,14 +36,19 @@ function formSubmit(e) {
     let numberOfConceptsEach_4p = newRecord[27]
     let HMEach_4p = newRecord[28]
 
+    let englishName = newRecord[29];
+
     // response 시트의 새로운 행에서 B열부터 J열까지의 데이터 가져오기
     let sourceData = sheetResponse.getRange(lastRow, 2, 1, 9).getValues()[0];
     
+    // sourceData 배열 재구성 - englishName을 2번째 위치에 삽입
+    sourceData.splice(1, 0, englishName);
+
     // info 시트의 A3 행에 새로운 행 추가
     sheetInfo.insertRowBefore(3);
     
     // info 시트의 A3 행에 데이터 붙여넣기
-    sheetInfo.getRange(3, 1, 1, 9).setValues([sourceData]); // A3 행에 데이터 붙여넣기(B열부터 J열까지)
+    sheetInfo.getRange(3, 1, 1, 10).setValues([sourceData]); // A3 행에 데이터 붙여넣기
 
     let coupleProfileMap = {
       1: "No, I won't shoot.",
@@ -53,7 +58,7 @@ function formSubmit(e) {
     };
 
     let coupleProfile = coupleProfileMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 10, 1, 1).setValue(coupleProfile);
+    sheetInfo.getRange(3, 11, 1, 1).setValue(coupleProfile);
 
     let groupProfileMap = {
       1: "No, I won't shoot.",
@@ -63,7 +68,7 @@ function formSubmit(e) {
     };
 
     let groupProfile = groupProfileMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 11, 1, 1).setValue(groupProfile);
+    sheetInfo.getRange(3, 12, 1, 1).setValue(groupProfile);
 
     let individualProfile1stMap = {
       1: numberOfConcepts_1p,
@@ -73,7 +78,7 @@ function formSubmit(e) {
     };
 
     let individualProfile1st = individualProfile1stMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 12, 1, 1).setValue(individualProfile1st);
+    sheetInfo.getRange(3, 13, 1, 1).setValue(individualProfile1st);
 
     let individualProfile1stHMMap = {
       1: HM_1p,
@@ -83,7 +88,7 @@ function formSubmit(e) {
     };
 
     let individualProfile1stHM = individualProfile1stHMMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 13, 1, 1).setValue(individualProfile1stHM);
+    sheetInfo.getRange(3, 14, 1, 1).setValue(individualProfile1stHM);
 
     let individualProfile2ndMap = {
       1: '',
@@ -92,7 +97,7 @@ function formSubmit(e) {
       4: ''
     };
     let individualProfile2nd = individualProfile2ndMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 14, 1, 1).setValue(individualProfile2nd);
+    sheetInfo.getRange(3, 15, 1, 1).setValue(individualProfile2nd);
 
     let individualProfile2ndHMMap = {
       1: '',
@@ -101,7 +106,7 @@ function formSubmit(e) {
       4: ''
     };
     let individualProfile2ndHM = individualProfile2ndHMMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 15, 1, 1).setValue(individualProfile2ndHM);
+    sheetInfo.getRange(3, 16, 1, 1).setValue(individualProfile2ndHM);
 
     let individualProfile3rdMap = {
       1: '',
@@ -110,7 +115,7 @@ function formSubmit(e) {
       4: ''
     };
     let individualProfile3rd = individualProfile3rdMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 16, 1, 1).setValue(individualProfile3rd);
+    sheetInfo.getRange(3, 17, 1, 1).setValue(individualProfile3rd);
 
     let individualProfile3rdHMMap = {
       1: '',
@@ -119,7 +124,7 @@ function formSubmit(e) {
       4: ''
     };
     let individualProfile3rdHM = individualProfile3rdHMMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 17, 1, 1).setValue(individualProfile3rdHM);
+    sheetInfo.getRange(3, 18, 1, 1).setValue(individualProfile3rdHM);
 
     let individualProfileEachMap = {
       1: '',
@@ -128,7 +133,7 @@ function formSubmit(e) {
       4: numberOfConceptsEach_4p
     };
     let individualProfileEach = individualProfileEachMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 18, 1, 1).setValue(individualProfileEach);
+    sheetInfo.getRange(3, 19, 1, 1).setValue(individualProfileEach);
 
     let individualProfileEachHMMap = {
       1: '',
@@ -137,5 +142,5 @@ function formSubmit(e) {
       4: HMEach_4p
     };
     let individualProfileEachHM = individualProfileEachHMMap[numberOfPeople] || '';
-    sheetInfo.getRange(3, 19, 1, 1).setValue(individualProfileEachHM);
+    sheetInfo.getRange(3, 20, 1, 1).setValue(individualProfileEachHM);
 }

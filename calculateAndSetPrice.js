@@ -2,20 +2,20 @@ function calculateAndSetPrice(sheet, row) {
     // 각 열의 값들을 가져오기
     // 10번째 열부터 9개의 열을 가져오기(J열 ~ R열)
     Logger.log("calculateAndSetPrice 함수 실행됨");
-    const values = sheet.getRange(row, 10, 1, 9).getValues()[0];
+    const values = sheet.getRange(row, 11, 1, 9).getValues()[0];
     let [couple_profile, group_profile, 
           individual_1st, individual_1st_hm, 
           individual_2nd, individual_2nd_hm,
           individual_3rd, individual_3rd_hm,
           individual_more_4] = values;
-    const numberOfPeople = sheet.getRange(row, 9).getValue();
+    const numberOfPeople = sheet.getRange(row, 10).getValue();
   
     // 가격 계산
     let priceText = "";
     
     // individual_more_4가 비어있지 않은 경우 처리
     if (individual_more_4 !== "") {
-      sheet.getRange(row, 23).setValue("기입 필요");
+      sheet.getRange(row, 24).setValue("기입 필요");
       return;
     }
   
@@ -123,6 +123,6 @@ function calculateAndSetPrice(sheet, row) {
     // 총액 추가
     priceText += `\n※ Total Price: KRW ${totalPrice.toLocaleString()}`;
   
-    // W열(23번째 열)에 결과 입력
-    sheet.getRange(row, 23).setValue(priceText.trim());
+    // X열(24번째 열)에 결과 입력
+    sheet.getRange(row, 24).setValue(priceText.trim());
   }
