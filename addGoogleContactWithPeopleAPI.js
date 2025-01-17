@@ -1,4 +1,4 @@
-function addGoogleContactWithPeopleAPI(contactName, phoneNumber) {
+function addGoogleContactWithPeopleAPI(contactName, phoneNumber, emailAddress) {
     let resource = {
       "names": [
         {
@@ -9,6 +9,12 @@ function addGoogleContactWithPeopleAPI(contactName, phoneNumber) {
         {
           "value": phoneNumber,
           "type": "mobile"
+        }
+      ],
+      "emailAddresses": [
+        {
+          "value": emailAddress,
+          "type": "home"
         }
       ]
     };

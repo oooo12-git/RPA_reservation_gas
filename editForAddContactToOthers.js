@@ -31,6 +31,7 @@ function addContactToOthers(e) {
     let name = responses[0];  // name 필드(A열)
     let phoneNumber = responses[4]; // Phone number 필드(E열)
     let date_of_shooting = new Date(responses[7]);  // Date of shooting 필드(H열)
+    let email = responses[5]; // email 필드(F열)
 
     let year = date_of_shooting.getFullYear().toString().slice(-2); // 연도의 마지막 2자리
     let month = ('0' + (date_of_shooting.getMonth() + 1)).slice(-2);
@@ -40,6 +41,6 @@ function addContactToOthers(e) {
 
     // 구글 연락처 추가
     let contactName = name + " " + dateLabel; // 예: Jae Hyun Kim 240920
-    addGoogleContactWithPeopleAPI(contactName, phoneNumber);
+    addGoogleContactWithPeopleAPI(contactName, phoneNumber, email);
 
 }

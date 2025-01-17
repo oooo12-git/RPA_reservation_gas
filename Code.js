@@ -116,7 +116,8 @@ function addCalendarSendMailAddContact(e) {
     
       // 구글 연락처 추가
       let contactName = name + " " + dateLabel; // 예: Jae Hyun Kim 0920
-      addGoogleContactWithPeopleAPI(contactName, phoneNumber);
+      Logger.log('email: ' + email);
+      addGoogleContactWithPeopleAPI(contactName, phoneNumber, email);
   
       // 예약금 알림 이메일 전송
       let depositWon = responses[20];
