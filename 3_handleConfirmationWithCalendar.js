@@ -1,20 +1,20 @@
-function handleConfirmationWithCalendar(e) {
+function handleConfirmationWithCalendar(e, name, email, numberOfPeople, date_of_shooting, studio, couple_profile, group_profile, individual_1st, individual_2nd, individual_3rd, EVENT_ID_COLUMN) {
     Logger.log('handleConfirmationWithCalendar 함수 실행됨');
     
     let responses = e.values;
     let row = e.row;
     
-    let name = responses[0];  // name 필드(A열)
-    let email = responses[6];  // email 필드 (G열)
-    let numberOfPeople = responses[9] // Number of people 필드(J열)
-    let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
-    let studio = responses[24];  // which Studio? 필드 (1st or 2nd)(Y열)
-    let eventId = responses[27]; // eventId 필드 (AB열)
-    let couple_profile = responses[10];  
-    let group_profile = responses[11];
-    let individual_1st = responses[12];
-    let individual_2nd = responses[14];
-    let individual_3rd = responses[16];
+    // let name = responses[0];  // name 필드(A열)
+    // let email = responses[6];  // email 필드 (G열)
+    // let numberOfPeople = responses[9] // Number of people 필드(J열)
+    // let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
+    // let studio = responses[24];  // which Studio? 필드 (1st or 2nd)(Y열)
+    let eventId = responses[EVENT_ID_COLUMN-1]; // eventId 필드 (AB열)
+    // let couple_profile = responses[10];  
+    // let group_profile = responses[11];
+    // let individual_1st = responses[12];
+    // let individual_2nd = responses[14];
+    // let individual_3rd = responses[16];
     
     // 캘린더 ID 설정
     let studio1CalendarId = 'e4078b3f6425088e10f2fa64229001821ae20bdf8e63c42fe2c096c65cdd6aa6@group.calendar.google.com';
@@ -90,7 +90,7 @@ function handleConfirmationWithCalendar(e) {
       // 시트에 새로운 Event ID 저장
       let newEventId = newEvent.getId();
       let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-      sheet.getRange(row, 28).setValue(newEventId); // 필요 시 열 번호 조정 - AB열
+      sheet.getRange(row, EVENT_ID_COLUMN).setValue(newEventId); // 필요 시 열 번호 조정 - AB열
 
       // 확인 이메일 전송
       sendConfirmationEmail(name, email, date_of_shooting,studio);

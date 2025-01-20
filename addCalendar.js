@@ -1,4 +1,4 @@
-function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_shooting, row, couple_profile, group_profile, individual_1st, individual_2nd, individual_3rd){
+function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_shooting, row, couple_profile, group_profile, individual_1st, individual_2nd, individual_3rd, EVENT_ID_COLUMN){
     Logger.log('addCalenadar 함수 실행됨');
     try{
         let calendar = CalendarApp.getCalendarById(calendarId);
@@ -37,7 +37,7 @@ function addCalendar(calendarId, name, hours, minutes, numberOfPeople, date_of_s
         Logger.log('캘린더 이벤트 생성 성공! Event ID: ' + event.getId());
         // 시트에 Event ID 저장 (AA열)
         let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-        sheet.getRange(row, 28).setValue(event.getId()); // 필요 시 열 번호 조정 AB열
+        sheet.getRange(row, EVENT_ID_COLUMN).setValue(event.getId()); // 필요 시 열 번호 조정 AB열
     
     }catch (e) {
         Logger.log('캘린더 이벤트 생성 에러 발생: ' + e.message);

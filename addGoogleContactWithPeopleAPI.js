@@ -1,4 +1,5 @@
 function addGoogleContactWithPeopleAPI(contactName, phoneNumber, emailAddress) {
+  Logger.log('addGoogleContactWithPeopleAPI 함수 실행됨 ');
     let resource = {
       "names": [
         {
