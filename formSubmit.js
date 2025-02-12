@@ -1,5 +1,6 @@
 function formSubmit(e) {
     Logger.log('formSubmit 함수 실행됨');
+
     // 시트 response와 시트 info 참조 가져오기
     let ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheetResponse = ss.getSheetByName('response');
@@ -11,7 +12,9 @@ function formSubmit(e) {
     // 시트 response의 마지막 행 데이터 가져오기
     let lastRow = sheetResponse.getLastRow(); // 마지막 행 번호
     let newRecord = sheetResponse.getRange(lastRow, 1, 1, sheetResponse.getLastColumn()).getValues()[0]; // 마지막 행 데이터
-    
+    let time = newRecord[0];
+    let name = newRecord[1];
+    emailAlarmFormSubmitted(name, time);
     let numberOfPeople = newRecord[9];
     let numberOfConcepts_1p = newRecord[10];
     let HM_1p = newRecord[11];
