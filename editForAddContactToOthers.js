@@ -1,6 +1,5 @@
 function editForAddContactToOthers(e) {
     // 수정된 범위 가져오기
-    Logger.log('editForAddContactToOthers 함수 실행됨');
     const range = e.range;
     const sheet = range.getSheet();
     let sheetName = sheet.getName();
@@ -8,7 +7,7 @@ function editForAddContactToOthers(e) {
     let editedColumn = range.getColumn();
     let value = range.getValue();
   
-    let SEND_MAIL_COLUMN = 26; // Z열
+    let SEND_MAIL_COLUMN = 27; // Z열
     // let CONFIRM_COLUMN = 27; // AA열
   
     if (sheetName === 'info' && editedColumn === SEND_MAIL_COLUMN && value == "Send!") {

@@ -1,4 +1,4 @@
-function addCalendarSendMailAddContact(e, row, name, phoneNumber, email, date_of_shooting, numberOfPeople, studio, sendMail, couple_profile, group_profile, individual_1st, individual_2nd, individual_3rd, EVENT_ID_COLUMN, DEPOSIT_COLUMN, DEPOSIT_DOLLAR_COLUMN, PRICE_TEXT_COLUMN) {
+function addCalendarSendMailAddContact(e, row, name, phoneNumber, email, date_of_shooting, numberOfPeople, studio, sendMail, couple_profile, group_profile, individual_1st, individual_2nd, individual_3rd, EVENT_ID_COLUMN, DEPOSIT_COLUMN, DEPOSIT_DOLLAR_COLUMN, PRICE_KO_COLUMN, PRICE_EN_COLUMN) {
     Logger.log('addCalendarSendMailAddContact 함수 실행됨');
   
     // 폼 응답 데이터를 가져옴
@@ -6,7 +6,8 @@ function addCalendarSendMailAddContact(e, row, name, phoneNumber, email, date_of
     //예약금(원화,달러), priceText는 시트에서 변경한 값 받아서 쓸 수 있도록 함.
     let depositWon = responses[DEPOSIT_COLUMN-1]; 
     let depositDollar = responses[DEPOSIT_DOLLAR_COLUMN-1];
-    let priceText = responses[PRICE_TEXT_COLUMN-1];
+    let ko_priceText = responses[PRICE_KO_COLUMN-1];
+    let priceText = responses[PRICE_EN_COLUMN-1];
     // let row = e.row; // 시트의 행번호
     
     // let name = responses[0];  // name 필드(A열)
@@ -57,6 +58,6 @@ function addCalendarSendMailAddContact(e, row, name, phoneNumber, email, date_of
       addGoogleContactWithPeopleAPI(contactName, phoneNumber, email);
   
       // 예약금 알림 이메일 전송
-      sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, depositWon, depositDollar, priceText, studio);
+      sendDepositNoticeEmail(name, email, date_of_shooting, numberOfPeople, depositWon, depositDollar, ko_priceText, priceText, studio);
     }
 }
