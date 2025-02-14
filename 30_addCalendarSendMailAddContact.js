@@ -8,21 +8,7 @@ function addCalendarSendMailAddContact(e, row, name, phoneNumber, email, date_of
     let depositDollar = responses[DEPOSIT_DOLLAR_COLUMN-1];
     let ko_priceText = responses[PRICE_KO_COLUMN-1];
     let priceText = responses[PRICE_EN_COLUMN-1];
-    // let row = e.row; // 시트의 행번호
     
-    // let name = responses[0];  // name 필드(A열)
-    // let phoneNumber = responses[5]; // Phone number 필드(F열)
-    // let email = responses[6];  // email 필드 (G열)
-    // let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
-    // let numberOfPeople = responses[9] // Number of people 필드(J열)
-    // let studio = responses[24];  // which Studio? 필드 (1st or 2nd)(Y열)
-    // let sendMail = responses[25];  // send mail 필드 (Send! or reject)(Z열)
-    // // let confirm = responses[25] // confirm 필드 (confirmed! or reject)
-    // let couple_profile = responses[10];
-    // let group_profile = responses[11];
-    // let individual_1st = responses[12];
-    // let individual_2nd = responses[13];
-    // let individual_3rd = responses[14];
     // 1호점 및 2호점 캘린더 ID 설정 (실제 캘린더 ID를 입력해야 함)
     let studio1CalendarId = 'e4078b3f6425088e10f2fa64229001821ae20bdf8e63c42fe2c096c65cdd6aa6@group.calendar.google.com';
     let studio2CalendarId = 'b319798d4b5cd32ef01cbe414c6b78541f258d88630e0b7d81f8d8513dc895ac@group.calendar.google.com';

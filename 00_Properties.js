@@ -21,7 +21,9 @@ function initializeColumnProperties() {
       DRIVE_LINK_COLUMN: 30,
       SEND_ADJUST_INFO_COLUMN: 31,
       SELECTED_PICTURE_NUMBER_COLUMN: 32,
-      SELECTED_DATE_COLUMN: 33
+      SELECTED_DATE_COLUMN: 33,
+      DUE_DATE_COLUMN: 34,
+      SELECTED_PICTURE_COUNT_COLUMN: 35
     };
   
     // 프로퍼티에 저장
