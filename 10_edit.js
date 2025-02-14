@@ -15,6 +15,7 @@ function edit(e) {
   let email = sheet.getRange(row, columns.EMAIL_COLUMN).getValue();
   let date_of_shooting = new Date(sheet.getRange(row, columns.DATE_OF_SHOOTING_COLUMN).getValue());
   let numberOfPeople = sheet.getRange(row, columns.NUMBER_OF_PEOPLE_COLUMN).getValue();
+  let driveLink = sheet.getRange(row, columns.DRIVE_LINK_COLUMN).getValue();
 
   const values = sheet.getRange(row, columns.COUPLE_PROFILE_COLUMN, 1, 9).getValues()[0];
   let [couple_profile, group_profile, 
@@ -94,5 +95,8 @@ function edit(e) {
     handleConfirmationWithCalendar({values: rowValues, row: row}, name, email, numberOfPeople, 
       date_of_shooting, studio, couple_profile, group_profile, individual_1st, individual_2nd, 
       individual_3rd, columns.EVENT_ID_COLUMN);
+  }
+  if (sheetName === 'info' && editedColumn == columns.SEND_ADJUST_INFO_COLUMN && value == "Send!") {
+    sendAdjustInfoEmail(name, email, studio, driveLink);
   }
 }
