@@ -6,11 +6,11 @@ function editForAddContactToOthers(e) {
     let row = range.getRow();
     let editedColumn = range.getColumn();
     let value = range.getValue();
+
+    // 프로퍼티에서 컬럼 정보 가져오기
+    const columns = getColumnProperties();
   
-    let SEND_MAIL_COLUMN = 27; // Z열
-    // let CONFIRM_COLUMN = 27; // AA열
-  
-    if (sheetName === 'info' && editedColumn === SEND_MAIL_COLUMN && value == "Send!") {
+    if (sheetName === 'info' && editedColumn === columns.SEND_MAIL_COLUMN && value == "Send!") {
       let rowValues = sheet.getRange(range.getRow(), 1, 1, sheet.getLastColumn()).getValues()[0];
       // range.getRow(): 현재 편집된 셀의 행 번호를 가져옵니다. 
       // 1 : 첫 번째 열(열 A)**부터 데이터를 가져옵니다.
@@ -27,10 +27,10 @@ function addContactToOthers(e) {
   
     // 폼 응답 데이터를 가져옴
     let responses = e.values;    
-    let name = responses[0];  // name 필드(A열)
-    let phoneNumber = responses[5]; // Phone number 필드(F열)
-    let email = responses[6]; // email 필드(G열)
-    let date_of_shooting = new Date(responses[8]);  // Date of shooting 필드(I열)
+    let name = responses[columns.NAME_COLUMN-1];  // name 필드(A열)
+    let phoneNumber = responses[columns.PHONE_NUMBER_COLUMN-1]; // Phone number 필드(F열)
+    let email = responses[columns.EMAIL_COLUMN-1]; // email 필드(G열)
+    let date_of_shooting = new Date(responses[columns.DATE_OF_SHOOTING_COLUMN-1]);  // Date of shooting 필드(I열)
 
     let year = date_of_shooting.getFullYear().toString().slice(-2); // 연도의 마지막 2자리
     let month = ('0' + (date_of_shooting.getMonth() + 1)).slice(-2);
