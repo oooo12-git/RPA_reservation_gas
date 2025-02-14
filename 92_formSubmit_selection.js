@@ -15,7 +15,9 @@ function formSubmit_selection(e) {
   // selection 시트에서 필요한 데이터 추출
   let time = newRecord[0];
   let selection_email = newRecord[3];  // 4번째 열의 이메일
+  let name_from_form = newRecord[2];
   let selected_picture_number = newRecord[1];  // 2번째 열의 선택된 사진 번호
+  let date_of_shooting = newRecord[4];
   
   // 날짜 문자열에서 년.월.일 부분만 추출
   let dateObj = new Date(newRecord[0]); // Date 객체로 변환
@@ -27,7 +29,13 @@ function formSubmit_selection(e) {
   let due_date = Utilities.formatDate(dueDateObj, "Asia/Seoul", "yyyy. M. d");
   
   // 선택된 사진 번호 개수 계산
-  let selected_picture_count = selected_picture_number.trim().split(/\s+/).length;
+  let selected_picture_count;
+  if (selected_picture_number === null || selected_picture_number === undefined) {
+    selected_picture_count = 0;
+  } else {
+    // 숫자를 문자열로 변환 후 처리
+    selected_picture_count = String(selected_picture_number).trim().split(/\s+/).length;
+  }
   
   Logger.log('선택된 날짜: ' + selected_date);
   Logger.log('마감 날짜: ' + due_date);
@@ -38,8 +46,10 @@ function formSubmit_selection(e) {
   // info 시트에서 이메일이 일치하는 행 찾기
   let infoData = infoSheet.getRange(2, 7, infoSheet.getLastRow() - 1, 1).getValues(); // 7번째 열(이메일) 데이터
   
+  let emailFound = false;
   for (let i = 0; i < infoData.length; i++) {
     if (infoData[i][0] === selection_email) {
+      emailFound = true;
       let row = i + 2;
       
       // info 시트에서 이름 가져오기
@@ -77,5 +87,10 @@ function formSubmit_selection(e) {
                  ', 선택된 사진 개수: ' + selected_picture_count);
       break;
     }
+  }
+  
+  if (!emailFound) {
+    Logger.log('이메일이 일치하는 행이 없습니다. 에러 처리를 시작합니다.');
+    selectionErrorHandling(name_from_form, date_of_shooting, selection_email, selected_picture_number, time);
   }
 } 
