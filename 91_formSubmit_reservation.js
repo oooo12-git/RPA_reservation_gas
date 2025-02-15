@@ -15,7 +15,14 @@ function formSubmit_reservation(e) {
     let time = newRecord[0];
     let name = newRecord[1];
     emailAlarmFormSubmitted(name, time);
-    let numberOfPeople = newRecord[9];
+    
+    let numberOfPeople;
+    if (newRecord[9] == 'More than 4') {
+      numberOfPeople = 4;
+    } else {
+      numberOfPeople = newRecord[9];
+    }
+    
     let numberOfConcepts_1p = newRecord[10];
     let HM_1p = newRecord[11];
 

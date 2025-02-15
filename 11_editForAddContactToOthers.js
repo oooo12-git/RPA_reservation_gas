@@ -24,7 +24,7 @@ function editForAddContactToOthers(e) {
 
 function addContactToOthers(e) {
     Logger.log('addContactToOthers 함수 실행됨');
-  
+    const columns = getColumnProperties();
     // 폼 응답 데이터를 가져옴
     let responses = e.values;    
     let name = responses[columns.NAME_COLUMN-1];  // name 필드(A열)

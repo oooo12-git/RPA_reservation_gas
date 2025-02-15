@@ -44,14 +44,21 @@ function handleConfirmationWithCalendar(e, name, email, numberOfPeople, date_of_
         throw new Error('캘린더를 찾을 수 없습니다. ID: ' + calendarId);
       }
       
-      let event = calendar.getEventById(eventId);
-      if (!event) {
-        throw new Error('이벤트를 찾을 수 없습니다. Event ID: ' + eventId);
+      // 기존 이벤트가 있는 경우에만 삭제 시도
+      if (eventId) {
+        try {
+          let event = calendar.getEventById(eventId);
+          if (event) {
+            event.deleteEvent();
+            Logger.log('기존 캘린더 이벤트 삭제 성공! Event ID: ' + eventId);
+          } else {
+            Logger.log('기존 이벤트가 이미 삭제되었거나 존재하지 않습니다.');
+          }
+        } catch (deleteError) {
+          Logger.log('기존 이벤트 삭제 중 에러 발생: ' + deleteError.message);
+          // 삭제 실패해도 계속 진행
+        }
       }
-      
-      // 기존 이벤트 삭제
-      event.deleteEvent();
-      Logger.log('기존 캘린더 이벤트 삭제 성공! Event ID: ' + eventId);
       
       // 업데이트된 제목으로 새 이벤트 생성
       let hours = ('0' + date_of_shooting.getHours()).slice(-2);
@@ -97,5 +104,6 @@ function handleConfirmationWithCalendar(e, name, email, numberOfPeople, date_of_
 
     } catch (error) {
       Logger.log('확인 처리 중 에러 발생: ' + error.message);
+      throw error; // 상위로 에러를 전파하여 실제 에러 내용을 확인할 수 있도록 함
     }
   }

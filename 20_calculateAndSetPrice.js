@@ -20,7 +20,8 @@ function calculateAndSetPrice(sheet, row, PRICE_KO_COLUMN, PRICE_EN_COLUMN, coup
     
     // individual_more_4가 비어있지 않은 경우 처리
     if (individual_more_4 !== "") {
-      sheet.getRange(row, PRICE_TEXT_COLUMN).setValue("기입 필요");
+      sheet.getRange(row, PRICE_KO_COLUMN).setValue("기입 필요");
+      sheet.getRange(row, PRICE_EN_COLUMN).setValue("기입 필요");
       return;
     }
   

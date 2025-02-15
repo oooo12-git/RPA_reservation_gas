@@ -48,6 +48,8 @@ function edit(e) {
         // 숫자가 아닌 경우 "기입필요" 입력
         sheet.getRange(row, columns.DEPOSIT_COLUMN).setValue("기입필요");
         sheet.getRange(row, columns.DEPOSIT_DOLLAR_COLUMN).setValue("기입필요");
+        sheet.getRange(row, columns.PRICE_KO_COLUMN).setValue("기입필요");
+        sheet.getRange(row, columns.PRICE_EN_COLUMN).setValue("기입필요");
       }
 
       // 가격 정보 계산 로직
