@@ -110,15 +110,24 @@ function edit(e) {
     editedColumn === columns.SEND_MAIL_COLUMN &&
     value == "Send!"
   ) {
+    // 확인 팝업 추가
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert(
+      "메일 전송 확인",
+      "정말로 보내시겠습니까?",
+      ui.ButtonSet.YES_NO
+    );
+
+    // '아니오' 선택시 메일 전송 취소
+    if (response !== ui.Button.YES) {
+      sheet.getRange(row, columns.SEND_MAIL_COLUMN).setValue("");
+      return;
+    }
+
     let rowValues = sheet
       .getRange(range.getRow(), 1, 1, sheet.getLastColumn())
       .getValues()[0];
-    // range.getRow(): 현재 편집된 셀의 행 번호를 가져옵니다.
-    // 1 : 첫 번째 열(열 A)**부터 데이터를 가져옵니다.
-    // 1 : 가져올 행의 개수, 즉 한 행만 가져옵니다.
-    // sheet.getLastColumn(): 해당 시트의 마지막 열 번호를 가져옵니다.
-    // getValues(): 위에서 지정한 범위의 데이터를 2차원 배열 형태로 가져옵니다. 예를 들어, 편집된 행에 데이터가 ["A", "B", "C"]라면, 반환값은 [["A", "B", "C"]]이 됩니다.
-    // {values: ["A", "B", "C"]} 형태로 전달.
+
     addCalendarSendMailAddContact(
       { values: rowValues, row: row },
       row,
@@ -146,6 +155,20 @@ function edit(e) {
     editedColumn == columns.CONFIRM_COLUMN &&
     value == "Confirmed!"
   ) {
+    // 확인 팝업 추가
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert(
+      "예약 확정 확인",
+      "정말로 확정하시겠습니까?",
+      ui.ButtonSet.YES_NO
+    );
+
+    // '아니오' 선택시 확정 취소
+    if (response !== ui.Button.YES) {
+      sheet.getRange(row, columns.CONFIRM_COLUMN).setValue("");
+      return;
+    }
+
     let rowValues = sheet
       .getRange(range.getRow(), 1, 1, sheet.getLastColumn())
       .getValues()[0];
@@ -169,6 +192,20 @@ function edit(e) {
     editedColumn == columns.SEND_ADJUST_INFO_COLUMN &&
     value == "Send!"
   ) {
+    // 확인 팝업 추가
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert(
+      "보정 안내 이메일 전송 확인",
+      "정말로 보내시겠습니까?",
+      ui.ButtonSet.YES_NO
+    );
+
+    // '아니오' 선택시 보정 안내 이메일 전송 취소
+    if (response !== ui.Button.YES) {
+      sheet.getRange(row, columns.SEND_ADJUST_INFO_COLUMN).setValue("");
+      return;
+    }
+
     if (!driveLink || driveLink.trim() === "") {
       // 드라이브 링크가 비어있는 경우
       SpreadsheetApp.getUi().alert("드라이브 링크가 없습니다.");
