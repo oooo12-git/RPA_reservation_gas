@@ -176,6 +176,7 @@ function edit(e) {
       return;
     }
     sendAdjustInfoEmail(name, email, studio, driveLink);
+    SpreadsheetApp.getUi().alert("보정 안내 이메일 전송 완료");
   }
 
   if (
