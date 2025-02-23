@@ -6,8 +6,8 @@ function formSubmit_reservation(e) {
   let sheetResponse = ss.getSheetByName("response");
   let sheetInfo = ss.getSheetByName("info");
 
-  // 폼 제출 데이터를 가져오기
-  let responses = e.values;
+  // 프로퍼티에서 컬럼 정보 가져오기
+  const columns = getColumnProperties();
 
   // 시트 response의 마지막 행 데이터 가져오기
   let lastRow = sheetResponse.getLastRow(); // 마지막 행 번호
@@ -49,6 +49,13 @@ function formSubmit_reservation(e) {
   let HMEach_4p = newRecord[28];
 
   let englishName = newRecord[29];
+  let conceptNames_1p = newRecord[30];
+  let conceptNames_2p_1st = newRecord[31];
+  let conceptNames_2p_2nd = newRecord[32];
+  let conceptNames_3p_1st = newRecord[33];
+  let conceptNames_3p_2nd = newRecord[34];
+  let conceptNames_3p_3rd = newRecord[35];
+  let conceptNamesEach_4p = newRecord[36];
 
   // response 시트의 새로운 행에서 B열부터 J열까지의 데이터 가져오기
   let sourceData = sheetResponse.getRange(lastRow, 2, 1, 9).getValues()[0];
@@ -79,7 +86,7 @@ function formSubmit_reservation(e) {
   // 전화번호 맨 앞의 0 제거
   let refinedPhoneNumber = rawPhoneNumber.replace(/^0+/, "");
   let phoneNumber = countryCode + "-" + refinedPhoneNumber;
-  sheetInfo.getRange(3, 6, 1, 1).setValue(phoneNumber);
+  sheetInfo.getRange(3, columns.PHONE_NUMBER_COLUMN, 1, 1).setValue(phoneNumber);
 
   let coupleProfileMap = {
     1: "No, I won't shoot.",
@@ -89,7 +96,7 @@ function formSubmit_reservation(e) {
   };
 
   let coupleProfile = coupleProfileMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 11, 1, 1).setValue(coupleProfile);
+  sheetInfo.getRange(3, columns.COUPLE_PROFILE_COLUMN, 1, 1).setValue(coupleProfile);
 
   let groupProfileMap = {
     1: "No, I won't shoot.",
@@ -99,7 +106,7 @@ function formSubmit_reservation(e) {
   };
 
   let groupProfile = groupProfileMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 12, 1, 1).setValue(groupProfile);
+  sheetInfo.getRange(3, columns.GROUP_PROFILE_COLUMN, 1, 1).setValue(groupProfile);
 
   let individualProfile1stMap = {
     1: numberOfConcepts_1p,
@@ -109,7 +116,7 @@ function formSubmit_reservation(e) {
   };
 
   let individualProfile1st = individualProfile1stMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 13, 1, 1).setValue(individualProfile1st);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_1ST_COLUMN, 1, 1).setValue(individualProfile1st);
 
   let individualProfile1stHMMap = {
     1: HM_1p,
@@ -118,8 +125,17 @@ function formSubmit_reservation(e) {
     4: "",
   };
 
+  let individualProfileConcepts1stMap = {
+    1: conceptNames_1p,
+    2: conceptNames_2p_1st,
+    3: conceptNames_3p_1st,
+    4: "",
+  };
+  let individualProfileConcepts1st = individualProfileConcepts1stMap[numberOfPeople] || "";
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_CONCEPTS_1ST_COLUMN, 1, 1).setValue(individualProfileConcepts1st);
+
   let individualProfile1stHM = individualProfile1stHMMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 14, 1, 1).setValue(individualProfile1stHM);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_1ST_HM_COLUMN, 1, 1).setValue(individualProfile1stHM);
 
   let individualProfile2ndMap = {
     1: "",
@@ -128,7 +144,16 @@ function formSubmit_reservation(e) {
     4: "",
   };
   let individualProfile2nd = individualProfile2ndMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 15, 1, 1).setValue(individualProfile2nd);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_2ND_COLUMN, 1, 1).setValue(individualProfile2nd);
+
+  let individualProfileConcepts2ndMap = {
+    1: "",
+    2: conceptNames_2p_2nd,
+    3: conceptNames_3p_2nd,
+    4: "",
+  };
+  let individualProfileConcepts2nd = individualProfileConcepts2ndMap[numberOfPeople] || "";
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_CONCEPTS_2ND_COLUMN, 1, 1).setValue(individualProfileConcepts2nd);
 
   let individualProfile2ndHMMap = {
     1: "",
@@ -137,7 +162,7 @@ function formSubmit_reservation(e) {
     4: "",
   };
   let individualProfile2ndHM = individualProfile2ndHMMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 16, 1, 1).setValue(individualProfile2ndHM);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_2ND_HM_COLUMN, 1, 1).setValue(individualProfile2ndHM);
 
   let individualProfile3rdMap = {
     1: "",
@@ -146,7 +171,16 @@ function formSubmit_reservation(e) {
     4: "",
   };
   let individualProfile3rd = individualProfile3rdMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 17, 1, 1).setValue(individualProfile3rd);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_3RD_COLUMN, 1, 1).setValue(individualProfile3rd);
+
+  let individualProfileConcepts3rdMap = {
+    1: "",
+    2: "",
+    3: conceptNames_3p_3rd,
+    4: "",
+  };
+  let individualProfileConcepts3rd = individualProfileConcepts3rdMap[numberOfPeople] || "";
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_CONCEPTS_3RD_COLUMN, 1, 1).setValue(individualProfileConcepts3rd);
 
   let individualProfile3rdHMMap = {
     1: "",
@@ -155,7 +189,7 @@ function formSubmit_reservation(e) {
     4: "",
   };
   let individualProfile3rdHM = individualProfile3rdHMMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 18, 1, 1).setValue(individualProfile3rdHM);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_3RD_HM_COLUMN, 1, 1).setValue(individualProfile3rdHM);
 
   let individualProfileEachMap = {
     1: "",
@@ -164,7 +198,16 @@ function formSubmit_reservation(e) {
     4: numberOfConceptsEach_4p,
   };
   let individualProfileEach = individualProfileEachMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 19, 1, 1).setValue(individualProfileEach);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_4TH_COLUMN, 1, 1).setValue(individualProfileEach);
+
+  let individualProfileConceptsEachMap = {
+    1: "",
+    2: "",
+    3: "",
+    4: conceptNamesEach_4p,
+  };
+  let individualProfileConceptsEach = individualProfileConceptsEachMap[numberOfPeople] || "";
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_CONCEPTS_4TH_COLUMN, 1, 1).setValue(individualProfileConceptsEach);
 
   let individualProfileEachHMMap = {
     1: "",
@@ -174,5 +217,5 @@ function formSubmit_reservation(e) {
   };
   let individualProfileEachHM =
     individualProfileEachHMMap[numberOfPeople] || "";
-  sheetInfo.getRange(3, 20, 1, 1).setValue(individualProfileEachHM);
+  sheetInfo.getRange(3, columns.INDIVIDUAL_PROFILE_4TH_HM_COLUMN, 1, 1).setValue(individualProfileEachHM);
 }

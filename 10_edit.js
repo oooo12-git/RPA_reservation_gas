@@ -21,20 +21,16 @@ function edit(e) {
     .getValue();
   let driveLink = sheet.getRange(row, columns.DRIVE_LINK_COLUMN).getValue();
 
-  const values = sheet
-    .getRange(row, columns.COUPLE_PROFILE_COLUMN, 1, 9)
-    .getValues()[0];
-  let [
-    couple_profile,
-    group_profile,
-    individual_1st,
-    individual_1st_hm,
-    individual_2nd,
-    individual_2nd_hm,
-    individual_3rd,
-    individual_3rd_hm,
-    individual_more_4,
-  ] = values;
+  let couple_profile = sheet.getRange(row, columns.COUPLE_PROFILE_COLUMN).getValue();
+  let group_profile = sheet.getRange(row, columns.GROUP_PROFILE_COLUMN).getValue();
+  let individual_1st = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_1ST_COLUMN).getValue();
+  let individual_1st_concepts = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_CONCEPTS_1ST_COLUMN).getValue();
+  let individual_1st_hm = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_1ST_HM_COLUMN).getValue();
+  let individual_2nd = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_2ND_COLUMN).getValue();
+  let individual_2nd_hm = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_2ND_HM_COLUMN).getValue();
+  let individual_3rd = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_3RD_COLUMN).getValue();
+  let individual_3rd_hm = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_3RD_HM_COLUMN).getValue();
+  let individual_more_4 = sheet.getRange(row, columns.INDIVIDUAL_PROFILE_4TH_COLUMN).getValue();
 
   let studio = sheet.getRange(row, columns.STUDIO_COLUMN).getValue();
   let sendMail = sheet.getRange(row, columns.SEND_MAIL_COLUMN).getValue();
@@ -69,17 +65,6 @@ function edit(e) {
         sheet.getRange(row, columns.PRICE_EN_COLUMN).setValue("기입필요");
       }
 
-      // 가격 정보 계산 로직
-      Logger.log("couple_profile: " + couple_profile);
-      Logger.log("group_profile: " + group_profile);
-      Logger.log("individual_1st: " + individual_1st);
-      Logger.log("individual_1st_hm: " + individual_1st_hm);
-      Logger.log("individual_2nd: " + individual_2nd);
-      Logger.log("individual_2nd_hm: " + individual_2nd_hm);
-      Logger.log("individual_3rd: " + individual_3rd);
-      Logger.log("individual_3rd_hm: " + individual_3rd_hm);
-      Logger.log("individual_more_4: " + individual_more_4);
-
       calculateAndSetPrice(
         sheet,
         row,
@@ -96,12 +81,15 @@ function edit(e) {
         individual_more_4,
         numberOfPeople
       );
+
+      gatheringConcepts(sheet, row);
     } else {
       // 체크 해제시 값 지우기
       sheet.getRange(row, columns.DEPOSIT_COLUMN).setValue("");
       sheet.getRange(row, columns.DEPOSIT_DOLLAR_COLUMN).setValue("");
       sheet.getRange(row, columns.PRICE_KO_COLUMN).setValue("");
       sheet.getRange(row, columns.PRICE_EN_COLUMN).setValue("");
+      sheet.getRange(row, columns.CHOSEN_CONCEPTS_COLUMN).setValue("");
     }
   }
 
